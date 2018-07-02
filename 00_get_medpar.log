@@ -1,0 +1,371 @@
+-------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/echow/QSU/SEER-medicare/code/00_get_medpar.log
+  log type:  text
+ opened on:   6 Jun 2018, 13:14:36
+
+. local start = "$S_TIME"
+
+. 
+. * ------------------------------------------------------------------------------
+. * SEER Medicare clean up
+. * Eric Chow, 06-06-2018
+. *
+. * appends the medpar files that contains claims.
+. * these files were obtained by running the SAS scripts provided by medicare
+. * destring, and subsets the population
+. * ------------------------------------------------------------------------------
+. 
+. set more off
+
+. 
+. clear 
+
+. clear mata
+
+. clear matrix
+
+. set maxvar 10000 
+
+
+. 
+. * ---------------------------------
+. * this program opens the pedsf file
+. * selects vars, destrings them and
+. * saves to a smaller dta.
+. 
+. capture program drop clean_medpar
+
+. program define clean_medpar
+  1.         args filepath
+  2.         
+.         use "`filepath'"
+  3. 
+.         keep    patient_id age mdcrstat stdstate snfind ///
+>                         adm_m adm_d adm_y   dis_m dis_d dis_y los  ///
+>                         totchrgs cvrdchrg reimbamt drgprice ///
+>                         raddgind radthind nucmdind ctscnind oimsrind  ///
+>                         numdxcde dgn_cd* surgind numsrgcd numsrgdt srgcde* sg_dt* ///
+>                         drgcode discdest 
+  4. 
+.         quietly destring age mdcrstat stdstate  ///
+>                         adm_m adm_d adm_y   dis_m dis_d dis_y   ///
+>                         raddgind radthind nucmdind ctscnind oimsrind  ///
+>                         numdxcde surgind numsrgcd numsrgdt srgcde* sg_dt* ///
+>                         drgcode discdest , replace force
+  5.          
+.         saveold "`filepath'_small", v(12) replace
+  6. end
+
+. 
+. 
+. 
+. * -------------------------------------------------------
+. * clean the files
+. 
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar00"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar00_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar00_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar01"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar01_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar01_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar02"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar02_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar02_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar03"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar03_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar03_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar04"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar04_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar04_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar05"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar05_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar05_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar06"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar06_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar06_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar07"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar07_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar07_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar08"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar08_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar08_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar09"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar09_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar09_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar10"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar10_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar10_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar11"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar11_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar11_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar12"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar12_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar12_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar13"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar13_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar13_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar14"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar14_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar14_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar91"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar91_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar91_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar92"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar92_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar92_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar93"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar93_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar93_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar94"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar94_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar94_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar95"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar95_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar95_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar96"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar96_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar96_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar97"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar97_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar97_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar98"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar98_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar98_small.dta saved
+
+. clean_medpar "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar99"
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar99_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar99_small.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD50707.000000"
+
+. use "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar00_small", clear
+
+. gen file = 0
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar01_small"
+
+. replace file = 1 if missing(file)
+(254,181 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar02_small"
+
+. replace file = 2 if missing(file)
+(306,687 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar03_small"
+
+. replace file = 3 if missing(file)
+(328,864 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar04_small"
+
+. replace file = 4 if missing(file)
+(367,035 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar05_small"
+
+. replace file = 5 if missing(file)
+(384,555 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar06_small"
+
+. replace file = 6 if missing(file)
+(443,045 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar07_small"
+
+. replace file = 7 if missing(file)
+(466,957 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar08_small"
+(note: variable srgcde7 was byte, now int to accommodate using data's values)
+(note: variable srgcde8 was byte, now int to accommodate using data's values)
+(note: variable srgcde9 was byte, now int to accommodate using data's values)
+(note: variable srgcde10 was byte, now int to accommodate using data's values)
+(note: variable srgcde11 was byte, now int to accommodate using data's values)
+(note: variable srgcde12 was byte, now int to accommodate using data's values)
+(note: variable srgcde13 was byte, now int to accommodate using data's values)
+(note: variable sg_dt7 was byte, now long to accommodate using data's values)
+(note: variable sg_dt8 was byte, now long to accommodate using data's values)
+(note: variable sg_dt9 was byte, now long to accommodate using data's values)
+(note: variable sg_dt10 was byte, now long to accommodate using data's values)
+(note: variable sg_dt11 was byte, now long to accommodate using data's values)
+(note: variable sg_dt12 was byte, now long to accommodate using data's values)
+(note: variable sg_dt13 was byte, now long to accommodate using data's values)
+
+. replace file = 8 if missing(file)
+(482,301 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar09_small"
+(note: variable srgcde14 was byte, now int to accommodate using data's values)
+(note: variable srgcde15 was byte, now int to accommodate using data's values)
+(note: variable srgcde16 was byte, now int to accommodate using data's values)
+(note: variable srgcde17 was byte, now int to accommodate using data's values)
+(note: variable srgcde18 was byte, now int to accommodate using data's values)
+(note: variable srgcde19 was byte, now int to accommodate using data's values)
+(note: variable srgcde20 was byte, now int to accommodate using data's values)
+(note: variable srgcde21 was byte, now int to accommodate using data's values)
+(note: variable srgcde22 was byte, now int to accommodate using data's values)
+(note: variable srgcde23 was byte, now int to accommodate using data's values)
+(note: variable srgcde24 was byte, now int to accommodate using data's values)
+(note: variable srgcde25 was byte, now int to accommodate using data's values)
+(note: variable sg_dt14 was byte, now long to accommodate using data's values)
+(note: variable sg_dt15 was byte, now long to accommodate using data's values)
+(note: variable sg_dt16 was byte, now long to accommodate using data's values)
+(note: variable sg_dt17 was byte, now long to accommodate using data's values)
+(note: variable sg_dt18 was byte, now long to accommodate using data's values)
+(note: variable sg_dt19 was byte, now long to accommodate using data's values)
+(note: variable sg_dt20 was byte, now long to accommodate using data's values)
+(note: variable sg_dt21 was byte, now long to accommodate using data's values)
+(note: variable sg_dt22 was byte, now long to accommodate using data's values)
+(note: variable sg_dt23 was byte, now long to accommodate using data's values)
+(note: variable sg_dt24 was byte, now long to accommodate using data's values)
+(note: variable sg_dt25 was byte, now long to accommodate using data's values)
+
+. replace file = 9 if missing(file)
+(492,893 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar10_small"
+(note: variable srgcde7 was int, now double to accommodate using data's values)
+(note: variable srgcde8 was int, now double to accommodate using data's values)
+(note: variable srgcde9 was int, now double to accommodate using data's values)
+(note: variable srgcde10 was int, now double to accommodate using data's values)
+
+. replace file = 10 if missing(file)
+(498,062 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar11_small"
+
+. replace file = 11 if missing(file)
+(495,822 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar12_small"
+
+. replace file = 12 if missing(file)
+(482,800 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar13_small"
+
+. replace file = 13 if missing(file)
+(465,116 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar14_small"
+
+. replace file = 14 if missing(file)
+(379,859 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar91_small"
+
+. replace file = 91 if missing(file)
+(3,552 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar92_small"
+
+. replace file = 92 if missing(file)
+(32,784 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar93_small"
+
+. replace file = 93 if missing(file)
+(37,656 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar94_small"
+
+. replace file = 94 if missing(file)
+(43,291 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar95_small"
+
+. replace file = 95 if missing(file)
+(50,081 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar96_small"
+
+. replace file = 96 if missing(file)
+(57,239 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar97_small"
+
+. replace file = 97 if missing(file)
+(64,843 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar98_small"
+
+. replace file = 98 if missing(file)
+(102,904 real changes made)
+
+. append using "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar99_small"
+
+. replace file = 99 if missing(file)
+(113,892 real changes made)
+
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD50707.000000"
+
+. 
+. 
+. saveold "/Volumes/QSU/Datasets/SEER_medicare/medpar/medpar_small", v(12) replace
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar_small.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/medpar/medpar_small.dta saved
+
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/echow/QSU/SEER-medicare/code/00_get_medpar.log
+  log type:  text
+ closed on:   6 Jun 2018, 13:57:53
+-------------------------------------------------------------------------------------------------------------

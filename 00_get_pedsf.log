@@ -1,0 +1,329 @@
+----------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/echow/QSU/SEER-medicare/code/00_get_pedsf.log
+  log type:  text
+ opened on:  26 Jun 2018, 13:22:42
+
+. local start = "$S_TIME"
+
+. 
+. * ------------------------------------------------------------------------------
+. * SEER Medicare clean up
+. * Eric Chow, 04-27-2017
+. *
+. * appends the 6 pedsf files that list all the cancer cases (cancer dgn file)
+. * these files were obtained by running the SAS scripts provided by medicare
+. * destring, and subsets the population
+. * ------------------------------------------------------------------------------
+. 
+. set more off
+
+. 
+. clear 
+
+. clear mata
+
+. clear matrix
+
+. set maxvar 10000 
+
+
+. 
+end of do-file
+
+. use "/Volumes/QSU/Datasets/SEER_medicare/pedsf_06"
+file /Volumes/QSU/Datasets/SEER_medicare/pedsf_06.dta not found
+r(601);
+
+. use "/Volumes/QSU/Datasets/SEER_medicare/pedsf/pedsf_06"
+
+. tab race
+
+   Medicare |
+       Race |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         28        0.29        0.29
+          1 |      7,707       80.84       81.13
+          2 |        639        6.70       87.83
+          3 |        328        3.44       91.27
+          4 |        598        6.27       97.55
+          5 |        208        2.18       99.73
+          6 |         26        0.27      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab rac_recy
+
+Race recode |
+ (W, B, AI, |
+       API) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      7,946       83.34       83.34
+          2 |        631        6.62       89.96
+          3 |         33        0.35       90.31
+          4 |        886        9.29       99.60
+          9 |         38        0.40      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab srace
+
+       SEER |
+Race/Ethnic |
+        ity |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         01 |      7,946       83.34       83.34
+         02 |        631        6.62       89.96
+         03 |         33        0.35       90.31
+         04 |        297        3.12       93.42
+         05 |        117        1.23       94.65
+         06 |        192        2.01       96.66
+         07 |          8        0.08       96.75
+         08 |         53        0.56       97.30
+         10 |         94        0.99       98.29
+         11 |          6        0.06       98.35
+         12 |          2        0.02       98.37
+         13 |         12        0.13       98.50
+         14 |          8        0.08       98.58
+         15 |          4        0.04       98.63
+         16 |         13        0.14       98.76
+         17 |          1        0.01       98.77
+         22 |          1        0.01       98.78
+         27 |          2        0.02       98.80
+         28 |          1        0.01       98.81
+         30 |          1        0.01       98.83
+         31 |          2        0.02       98.85
+         96 |         65        0.68       99.53
+         97 |          7        0.07       99.60
+         98 |          7        0.07       99.67
+         99 |         31        0.33      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab m_sex
+
+   Medicare |
+        Sex |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      4,817       50.52       50.52
+          2 |      4,717       49.48      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab s_sex
+
+   SEER Sex |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      4,817       50.52       50.52
+          2 |      4,717       49.48      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab race
+
+   Medicare |
+       Race |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         28        0.29        0.29
+          1 |      7,707       80.84       81.13
+          2 |        639        6.70       87.83
+          3 |        328        3.44       91.27
+          4 |        598        6.27       97.55
+          5 |        208        2.18       99.73
+          6 |         26        0.27      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab srace
+
+       SEER |
+Race/Ethnic |
+        ity |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         01 |      7,946       83.34       83.34
+         02 |        631        6.62       89.96
+         03 |         33        0.35       90.31
+         04 |        297        3.12       93.42
+         05 |        117        1.23       94.65
+         06 |        192        2.01       96.66
+         07 |          8        0.08       96.75
+         08 |         53        0.56       97.30
+         10 |         94        0.99       98.29
+         11 |          6        0.06       98.35
+         12 |          2        0.02       98.37
+         13 |         12        0.13       98.50
+         14 |          8        0.08       98.58
+         15 |          4        0.04       98.63
+         16 |         13        0.14       98.76
+         17 |          1        0.01       98.77
+         22 |          1        0.01       98.78
+         27 |          2        0.02       98.80
+         28 |          1        0.01       98.81
+         30 |          1        0.01       98.83
+         31 |          2        0.02       98.85
+         96 |         65        0.68       99.53
+         97 |          7        0.07       99.60
+         98 |          7        0.07       99.67
+         99 |         31        0.33      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab race_recb
+variable race_recb not found
+r(111);
+
+. tab rac_recb
+
+Race recode |
+  (expanded |
+1970,80 exp |
+     rates) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         01 |      7,224       75.77       75.77
+         02 |        631        6.62       82.39
+         03 |         33        0.35       82.74
+         04 |        297        3.12       85.85
+         05 |        117        1.23       87.08
+         06 |        192        2.01       89.09
+         07 |          8        0.08       89.18
+         08 |        272        2.85       92.03
+         09 |         39        0.41       92.44
+         11 |        721        7.56      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab rac_recy
+
+Race recode |
+ (W, B, AI, |
+       API) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      7,946       83.34       83.34
+          2 |        631        6.62       89.96
+          3 |         33        0.35       90.31
+          4 |        886        9.29       99.60
+          9 |         38        0.40      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. tab rac_reca
+
+Race recode |
+    (White, |
+     Black, |
+     Other) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      7,946       83.34       83.34
+          2 |        631        6.62       89.96
+          3 |        919        9.64       99.60
+          9 |         38        0.40      100.00
+------------+-----------------------------------
+      Total |      9,534      100.00
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+. 
+.         keep oshufcase patient_id mat_type ///
+>                  med_dodm med_dodd med_dody   ///
+>                  birthm birthyr yr_brth s_sex race rac_rec* srace agedx* ///
+>                  state county urbrur urban ///
+>                  med_stcd medst_yr icd_code cod10v cod89v /// 
+>                  count resnrec marst* nosrg* rad* radbrn* radsurg* sssurg* sxsco
+> p* sxsite*///
+/ invalid name
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         keep oshufcase patient_id mat_type ///
+>                  med_dodm med_dodd med_dody   ///
+>                  birthm birthyr yr_brth s_sex race rac_rec* srace agedx* ///
+>                  state county urbrur urban ///
+>                  med_stcd medst_yr icd_code cod10v cod89v /// 
+>                  count resnrec marst* nosrg* rad* radbrn* radsurg* sssurg* sxsco
+> p* sxsite* ///
+>                  reg* seq* modx* yrdx* site* gho* mon* lat* hist* histrec* ///
+>                  beh* grade* dxconf* src* e10* cstum* ///
+>                  typefu* ///
+>                  hstst* ajccstg* aj3sr* frstprm* summ2k* vsrtdx* intprim* ///
+>                  srvm* monrx* yearrx* 
+
+.          
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         encode mat_type, gen(mat_type_)
+
+.         drop mat_type
+
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         quietly destring  m_sex race med_stcd medst_yr ///
+>          srace count resnrec ///
+>         marst* agedx* seq*  site* ///
+>         lat* hist* beh* hist* grade* dxconf* src* e10* cstum* nosrg* rad* typefu
+> *  ///
+>         aj3sr* hstst* ajccstg* frstprm* summ2k* vsrtdx* intprim* srvm* monrx* ye
+> arrx* , replace
+variable m_sex not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         quietly destring  s_sex race med_stcd medst_yr ///
+>          srace count resnrec ///
+>         marst* agedx* seq*  site* ///
+>         lat* hist* beh* hist* grade* dxconf* src* e10* cstum* nosrg* rad* typefu
+> *  ///
+>         aj3sr* hstst* ajccstg* frstprm* summ2k* vsrtdx* intprim* srvm* monrx* ye
+> arrx* , replace
+
+.          
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         quietly destring  s_sex race med_stcd medst_yr ///
+>          srace count resnrec ///
+>          state county urbrur urban ///
+>          rac_rec* icd_code cod* registry* reg2cd* reg*/// 
+/ invalid name
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+.         quietly destring  s_sex race med_stcd medst_yr ///
+>          srace count resnrec ///
+>          state county urbrur urban ///
+>          rac_rec* icd_code cod* registry* reg2cd* reg* /// 
+>         marst* agedx* seq*  site* sssurg* sxscop* sxsite* ///
+>         lat* hist* beh* hist* grade* dxconf* src* e10* cstum* nosrg* rad* typefu
+> *  ///
+>         aj3sr* hstst* ajccstg* frstprm* summ2k* vsrtdx* intprim* srvm* monrx* ye
+> arrx* , replace
+
+.          
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD34824.000000"
+
+. capture log close
