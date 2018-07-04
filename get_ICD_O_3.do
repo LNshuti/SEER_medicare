@@ -8,19 +8,19 @@ insheet using "/Users/echow/QSU/SEER-medicare/data/ICD_O_3/ICD-O-3_CSV-metadata/
 label data "ICD-O-3 metadata morphology (English)"
 
 * get histology from code
-gen histology = substr(code, 1, 4)
-destring histology, replace
+gen hist = substr(code, 1, 4)
+destring hist, replace
 
 * get behavior from code
-gen behavior = substr(code,6,1)
-destring behavior, replace
+gen beh = substr(code,6,1)
+destring beh, replace
 
 drop code
-order histology behavior struct label
+order hist beh struct label
 
 * keep only title 
 keep if struct == "title"
-isid histology behavior
+isid hist beh
 
 * save out file
 saveold "data/ICD_O_3_histbeh", replace
