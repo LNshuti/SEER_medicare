@@ -1,8 +1,8 @@
------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  /Users/echow/QSU/SEER-medicare/code/01_clean_pedsf.log
   log type:  text
- opened on:   2 Jul 2018, 14:43:37
+ opened on:   4 Jul 2018, 11:02:04
 
 . local start = "$S_TIME"
 
@@ -15,7 +15,8 @@
 . * but no other data transformations done (some string to text)
 . *
 . * do the Things from Baiyu's file. ie: 
-. *    1. get only those w firdt dx == lung cancer, not just any dx of LC (use SITERWHO, seq1=00|01)
+. *    1. get only those w firdt dx == lung cancer, not just any dx of LC (use SITERWHO, seq1
+> =00|01)
 . *    2. keep if dgn in 2000-2013
 . *    3. must be enerolled in medicar part A & B, & not in HMO in mnth of dgn
 . *    4. keep only dgn from 2000-2013 - compare w SEER*medicare website
@@ -39,9 +40,10 @@
 
 . 
 . * go from wide to long
-. reshape long seq agedx modx yrdx site siterwho hist hist2_ histrec hstst ajccstg aj3sr frstprm intprim beh beh2_ beht
-> rend summ2k grade dxconf lat src e10sz e10ex e10pe e10nd e10pn e10ne cstum nosrg rad radbrn radsurg sssurg sxscop sxs
-> ite typefu monrx yearrx vsrtdx srvm srvmflag marst reg, i(patient_id) j(dx_i)
+. reshape long seq agedx modx yrdx site siterwho hist hist2_ histrec hstst ajccstg aj3sr frst
+> prm intprim beh beh2_ behtrend summ2k grade dxconf lat src e10sz e10ex e10pe e10nd e10pn e1
+> 0ne cstum nosrg rad radbrn radsurg sssurg sxscop sxsite typefu monrx yearrx vsrtdx srvm srv
+> mflag marst reg, i(patient_id) j(dx_i)
 (note: j = 1 2 3 4 5 6 7 8 9 10)
 
 Data                               wide   ->   long
@@ -265,9 +267,9 @@ yrdx: all characters numeric; yrdx_ generated as int
 . 
 . codebook yrdx_
 
------------------------------------------------------------------------------------------------------------------------
-yrdx_                                                                                                 year of diagnosis
------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+yrdx_                                                                       year of diagnosis
+---------------------------------------------------------------------------------------------
 
                   type:  numeric (int)
 
@@ -290,9 +292,9 @@ modx: all characters numeric; modx_ generated as byte
 
 . codebook mo_i
 
------------------------------------------------------------------------------------------------------------------------
-mo_i                                                                                                        (unlabeled)
------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+mo_i                                                                              (unlabeled)
+---------------------------------------------------------------------------------------------
 
                   type:  numeric (float)
 
@@ -765,129 +767,210 @@ mo_i                                                                            
 
 . 
 . * encode race
-. label define race 0 "unknown" 1 "white" 2 "black" 3 "other" 4 "asian" 5 "hispanic" 6 "native american"
+. label define race 0 "unknown" 1 "white" 2 "black" 3 "other" 4 "asian" 5 "hispanic" 6 "nativ
+> e american"
 
 . label values race race
 
 . 
 . * histrec1 .. 10
-. label define histology 0 "unspecified neoplasms" 1 "epithelial neoplasms, NOS" 2 "squamous cell neoplams" 3 "basal ce
-> ll neoplams" 4 "transitional cell papillomas and carcinomas" 5 "adenomas and adenocarcinomas" 6 "adnexal and skin app
-> endage neoplams" 7 "mucoepidermoid neoplasms" 8 "cystic, mucinous and serous neoplams" 9 "ductal and lobular neoplams
-> " 10 "acinar cell neoplasms" 11 "complex epithelial neoplams" 12 "thymic epithelial neoplams" 13 "specialized gonadal
->  neoplams" 14 "paragangliomas and glumus tumors" 15 "nevi and melanomas" 16 "soft tissue tumors and sarcomas, NOS" 17
->  "fibromatous neoplasms" 18 "myxomatous neoplasms" 19 "lipomatous neoplasms" 20 "myomatous neoplasms" 21 "complex mix
-> ed and stromal neoplasms" 22 "fibroepithelial neoplasms" 23 "synovial-like neoplasms" 24 "mesothelial neoplasms" 25 "
-> germ cell neoplasms" 26 "trophoblastic neoplasms" 27 "mesonephromas" 28 "blood vessel tumors" 29 "lymphatic vessel tu
-> mors" 30 "osseous and chondromatous neoplasms" 31 "giant cell tumors" 32 "miscellaneous bone tumors (C40._,C41._)" 33
->  "odontogenic tumors ( C41._)" 34 "miscellaneous tumors" 35 "gliomas" 36 "neuroepitheliomatous neoplasms" 37 "meningi
-> omas" 38 "nerve sheath tumors" 39 "granular cell tumors & alveolar soft part sarcomas" 40 "malignant lymphomas, NOS o
-> r diffuse" 41 "hodgkin lymphomas" 42 "nhl - mature b-cell lymphomas" 43 "nhl - mature t and nk-cell lymphomas" 44 "nh
-> l - precursor cell lymphoblastic lymphoma" 45 "plasma cell tumors" 46 "mast cell tumors" 47 "neoplasms of histiocytes
->  and accessory lymphoid cells" 48 "immunoproliferative diseases" 49 "leukemias, nos" 50 "lymphoid leukemias (C42.1)" 
-> 51 "myeloid leukemias (C42.1)" 52 "other leukemias (C42.1)" 53 "chronic myeloproliferative disorders (C42.1)" 54 "oth
-> er hematologic disorders" 55 "myelodysplastic syndrome" 98 "other 
+. label define histology 0 "unspecified neoplasms" 1 "epithelial neoplasms, NOS" 2 "squamous 
+> cell neoplams" 3 "basal cell neoplams" 4 "transitional cell papillomas and carcinomas" 5 "a
+> denomas and adenocarcinomas" 6 "adnexal and skin appendage neoplams" 7 "mucoepidermoid neop
+> lasms" 8 "cystic, mucinous and serous neoplams" 9 "ductal and lobular neoplams" 10 "acinar 
+> cell neoplasms" 11 "complex epithelial neoplams" 12 "thymic epithelial neoplams" 13 "specia
+> lized gonadal neoplams" 14 "paragangliomas and glumus tumors" 15 "nevi and melanomas" 16 "s
+> oft tissue tumors and sarcomas, NOS" 17 "fibromatous neoplasms" 18 "myxomatous neoplasms" 1
+> 9 "lipomatous neoplasms" 20 "myomatous neoplasms" 21 "complex mixed and stromal neoplasms" 
+> 22 "fibroepithelial neoplasms" 23 "synovial-like neoplasms" 24 "mesothelial neoplasms" 25 "
+> germ cell neoplasms" 26 "trophoblastic neoplasms" 27 "mesonephromas" 28 "blood vessel tumor
+> s" 29 "lymphatic vessel tumors" 30 "osseous and chondromatous neoplasms" 31 "giant cell tum
+> ors" 32 "miscellaneous bone tumors (C40._,C41._)" 33 "odontogenic tumors ( C41._)" 34 "misc
+> ellaneous tumors" 35 "gliomas" 36 "neuroepitheliomatous neoplasms" 37 "meningiomas" 38 "ner
+> ve sheath tumors" 39 "granular cell tumors & alveolar soft part sarcomas" 40 "malignant lym
+> phomas, NOS or diffuse" 41 "hodgkin lymphomas" 42 "nhl - mature b-cell lymphomas" 43 "nhl -
+>  mature t and nk-cell lymphomas" 44 "nhl - precursor cell lymphoblastic lymphoma" 45 "plasm
+> a cell tumors" 46 "mast cell tumors" 47 "neoplasms of histiocytes and accessory lymphoid ce
+> lls" 48 "immunoproliferative diseases" 49 "leukemias, nos" 50 "lymphoid leukemias (C42.1)" 
+> 51 "myeloid leukemias (C42.1)" 52 "other leukemias (C42.1)" 53 "chronic myeloproliferative 
+> disorders (C42.1)" 54 "other hematologic disorders" 55 "myelodysplastic syndrome" 98 "other
+>  
 
 . label values histrec histology
 
 . 
 . * define site
-. label define site_icd_o_3 0  "External upper lip" 1  "External lower lip" 2  "External lip, NOS" 3  "Mucosa of upper 
-> lip" 4  "Mucosa of lower lip" 5  "Mucosa of lip, NOS" 6  "Commissure of lip" 8  "Overlapping lesion of lip" 9  "Lip, 
-> NOS" 19  "Base of tongue, NOS" 20  "Dorsal surface of tongue, NOS" 21  "Border of tongue" 22  "Ventral surface of ton
-> gue, NOS" 23  "Anterior 2/3 of tongue, NOS" 24  "Lingual tonsil" 28  "Overlapping lesion of tongue" 29  "Tongue, NOS"
->  30  "Upper Gum" 31  "Lower gum" 39  "Gum, NOS" 40  "Anterior floor of mouth" 41  "Lateral floor of mouth" 48  "Overl
-> apping lesion of floor of mouth" 49  "Floor of mouth, NOS" 50  "Hard palate" 51  "Soft palate, NOS" 52  "Uvula" 58  "
-> Overlapping lesion of palate" 59  "Palate, NOS" 60  "Cheeck mucosa" 61  "Vestibule of mouth" 62  "Retromolar area" 68
->   "Overlapping lesion of other and unspecified parts of mouth" 69  "Mouth, NOS" 79  "Parotid gland" 80  "Submandibula
-> r gland" 81  "Sublingual gland" 88  "Overlapping lesion of major salivary glands" 89  "Major salivary gland, NOS" 90 
->  "Tonsillar fossa" 91  "Tonsillar pillar" 98  "Overlapping lesion of tonsil" 99  "Tonsil, NOS" 100  "Vallecula" 101  
-> "Anterior surface of epiglottis" 102  "Lateral wall of oropharynx" 103  "Posterior wall of oropharynx" 104  "Branchia
-> l cleft" 108  "Overlapping lesions of oropharynx" 109  "Oropharynx, NOS" 110  "Superior wall of nasopharynx" 111  "Po
-> sterior wall of nasopharynx" 112  "Lateral wall of nasopharynx" 113  "Anterior wall of nasopharynx" 118  "Overlapping
->  lesion of nasopharynx" 119  "Nasopharynx, NOS" 129  "Pyriform sinus" 130  "Postcricoid region" 131  "Hypopharyngeal 
-> aspect of aryepiglottic fold" 132  "Posterior wall of hypopharynx" 138  "Overlapping lesion of hypopharynx" 139  "Hyp
-> opharynx, NOS" 140  "Pharynx, NOS" 142  "Waldeyer ring" 148  "Overlapping lesion of lip, oral cavity and pharynx" 150
->   "Cervical esophagus" 151  "Thoracic esophagus" 152  "Abdominal esophagus" 153  "Upper third of esophagus" 154  "Mid
-> dle third of esophagus" 155  "Lower third of esophagus" 158  "Overlapping lesion of esophagus" 159  "Esophagus, NOS" 
-> 160  "Cardia, NOS" 161  "Fundus of stomach" 162  "Body of stomach" 163  "Gastric antrum" 164  "Pylorus" 165  "Lesser 
-> curvature of stomach, NOS" 166  "Greater curvature of stomach, NOS" 168  "Overlapping lesion of stomach" 169  "Stomac
-> h, NOS" 170  "Duodenum" 171  "Jejunum" 172  "Ileum" 173  "Meckel diverticulum" 178  "Overlapping lesion of small inte
-> stine" 179  "Small intestine, NOS" 180  "Cecum" 181  "Appendix" 182  "Ascending colon" 183  "Hepatic flexure of colon
-> " 184  "Transverse colon" 185  "Splenic flexure of colon" 186  "Descending colon" 187  "Sigmoid colon" 188  "Overlapp
-> ing lesion of colon" 189  "Colon, NOS" 199  "Rectosigmoid junction" 209  "Rectum, NOS" 210  "Anus, NOS" 211  "Anal ca
-> nal" 212  "Cloacogenic zone" 218  "Overlapping lesion of rectum, anus and anal canal" 220  "Liver" 221  "intrahepatic
->  bile duct" 239  "Gallbladder" 240  "Extrahepatic bile duct" 241  "Ampulla of Vater" 248  "Overlapping lesion of bill
-> iary tract" 249  "Billiary tract, NOS" 250  "Head of pancreas" 251  "Body of pancreas" 252  "Tail of pancreas" 253  "
-> Pancreatic duct" 254  "Islets of Langerhans" 257  "Other specified parts of pancreas" 258  "Overlapping lesion of pan
-> creas" 259  "Pancreas, NOS" 260  "Intestinal tract, NOS" 268  "Overlapping lesion of digestive system" 269  "Gastroin
-> testinal tract, NOS" 300  "Nasal cavity" 301  "Middle ear" 310  "Maxillary sinus" 311  "Ethmoid sinus" 312  "Frontal 
-> sinus" 313  "Sphenoid sinus" 318  "Overlapping lesion of accessory sinuses" 319  "Accessory sinus, NOS" 320  "Glottis
-> " 321  "Supraglottis" 322  "Subglottis" 323  "Laryngeal cartilage" 328  "Overlapping lesion of larynx" 329  "Larynx, 
-> NOS" 339  "Trachea" 340  "Main bronchus" 341  "Upper lobe, lung" 342  "Middle lobe, lung" 343  "Lower lobe, lung" 348
->   "Overlapping lesion of lung" 349  "Lung, NOS" 379  "Thymus" 380  "Heart" 381  "Anterior mediastinum" 382  "Posterio
-> r mediastinum" 383  "Mediastinum, NOS" 384  "Pleura, NOS" 388  "Overlapping lesion of heart, mediastinum and pleura" 
-> 390  "Upper respiratory tract, NOS" 398  "Overlapping lesion of respiratory system and intrathoracic organs" 399  "Il
-> l-defined sites within respiratory system" 400  "Long bones of upper limb, scapula and associated joints" 401  "Short
->  bones of upper limb and associated joints" 402  "Long bones of lower limb and associated joints" 403  "Short bones o
-> f lower limb and associated joints" 408  "Overlapping lesion of bones, joints and articular cartilage of limbs" 409  
-> "Bone of limb, NOS" 410  "Bones of skull and face and associated joints" 411  "Mandible" 412  "Vertebral column" 413 
->  "Rib, sternum, clavicle and associated joints" 414  "Pelvic bones, sacrum, coccyx and associated joints" 418  "Overl
-> apping lesion of bones, joints and articular cartilage" 419  "Bone, NOS" 420  "Blood" 421  "Bone marrow" 422  "Spleen
-> " 423  "Reticuloendothelial system, NOS" 424  "Hematopoietic system, NOS" 440  "Skin of lip, NOS" 441  "Eyelid" 442  
-> "External ear" 443  "Skin of other and unspecified parts of face" 444  "Skin of scalp and neck" 445  "Skin of trunk" 
-> 446  "Skin of upper limb and shoulder" 447  "Skin of lower limb and hip" 448  "Overlapping lesion of skin" 449  "Skin
-> , NOS" 470  "Peripheral nerves and autonomic nervous system of head, face, and neck" 471  "Peripheral nerves and auto
-> nomic nervous system of upper limb and shoulder" 472  "Peripheral nerves and autonomic nervous system of lower limb a
-> nd hip" 473  "Peripheral nerves and autonomic nervous system of thorax" 474  "Peripheral nerves and autonomic nervous
->  system of abdomen" 475  "Peripheral nerves and autonomic nervous system of pelvis" 476  "Peripheral nerves and auton
-> omic nervous system of trunk, NOS" 478  "Overlapping lesion of peripheral nerves and autonomic nervous system" 479  "
-> Autonomic nervous system, NOS" 480  "Retroperitoneum" 481  "Specified parts of peritoneum" 482  "Peritoneum, NOS" 488
->   "Overlapping lesion of retroperitoneum and peritoneum" 490  "Connective, Subcutaneous and other soft tissues of hea
-> d, face, and neck" 491  "Connective, Subcutaneous and other soft tissues of upper limb and shoulder" 492  "Connective
-> , Subcutaneous and other soft tissues of lower limb and hip" 493  "Connective, Subcutaneous and other soft tissues of
->  thorax" 494  "Connective, Subcutaneous and other soft tissues of abdomen" 495  "Connective, Subcutaneous and other s
-> oft tissues of pelvis" 496  "Connective, Subcutaneous and other soft tissues of trunk, NOS" 498  "Overlapping lesion 
-> of connective, subcutaneous and other soft tissues" 499  "Connective, Subcutaneous and other soft tissues, NOS" 500  
-> "Nipple" 501  "Central portion of breast" 502  "Upper-inner quadrant of breast" 503  "Lower-inner quadrant of breast"
->  504  "Upper-outer quadrant of breast" 505  "Lower-outer quadrant of breast" 506  "Axillary tail of breast" 508  "Ove
-> rlapping lesion of breast" 509  "Breast, NOS" 510  "Labium majus" 511  "Labium minus" 512  "Clitorus" 518  "Overlappi
-> ng lesion of vulva" 519  "Vulva, NOS" 529  "Vagina, NOS" 530  "Endocervix" 531  "Exocervix" 538  "Overlapping lesion 
-> of cervix uteri" 539  "Cervix uteri" 540  "Isthmus uteri" 541  "Endometrium" 542  "Myometrium" 543  "Fundus uteri" 54
-> 8  "Overlapping lesion of corpus uteri" 549  "Corpus uteri" 559  "Uterus, NOS" 569  "Ovary" 570  "Fallopian tube" 571
->   "Broad ligament" 572  "Round ligament" 573  "Parametrium" 574  "Uterine adnexa" 577  "Other specified parts of fema
-> le genital organs" 578  "Overlapping lesion of female genital organs" 579  "Female genital tract, NOS" 589  "Placenta
-> " 600  "Prepuce" 601  "Glans penis" 602  "Body of penis" 608  "Overlapping lesion of penis" 609  "Penis, NOS" 619  "P
-> rostate gland" 620  "Undescended testis" 621  "Descended testis" 629  "Testis, NOS" 630  "Epididymis" 631  "Spermatic
->  cord" 632  "Scrotum, NOS" 637  "Other specified parts of male genital organs" 638  "Overlapping lesion of male genit
-> al organs" 639  "Male genital organs, NOS" 649  "Kidney, NOS" 659  "Renal pelvis" 669  "Ureter" 670  "Trigone of blad
-> der" 671  "Dome of bladder" 672  "Lateral wall of bladder" 673  "Anterior wall of bladder" 674  "Posterior wall of bl
-> adder" 675  "Bladder neck" 676  "Ureteric orifice" 677  "Urachus" 678  "Overlapping lesion of bladder" 679  "Bladder,
->  NOS" 680  "Urethra" 681  "Paraurethral gland" 688  "Overlapping lesion of urinary organs" 689  "Urinary system, NOS"
->  690  "Conjunctiva" 691  "Cornea, NOS" 692  "Retina" 693  "Choroid" 694  "Ciliary body" 695  "Lacrimal gland" 696  "O
-> rbit, NOS" 698  "Overlapping lesion of eye and adnexa" 699  "Eye, NOS" 700  "Cerebral meninges" 701  "Spinal meninges
-> " 709  "Meninges, NOS" 710  "Cerebrum" 711  "Frontal lobe" 712  "Temporal lobe" 713  "Parietal lobe" 714  "Occipital 
-> lobe" 715  "Ventricle, NOS" 716  "Cerebellum, NOS" 717  "Brain stem" 718  "Overlapping lesion of brain" 719  "Brain, 
-> NOS" 720  "Spinal cord" 721  "Cauda equina" 722  "Olfactory nerve" 723  "Optic nerve" 724  "Acoustic nerve" 725  "Cra
-> nial nerve, NOS" 728  "Overlapping lesion of brain and central nervous system" 729  "Nervous system, NOS" 739  "Thyro
-> id gland" 740  "Cortex of adrenal gland" 741  "Medulla of adrenal gland" 749  "Adrenal gland, NOS" 750  "Parathyroid 
-> gland" 751  "Pituitary gland" 752  "Craniopharyngeal duct" 753  "Pineal gland" 754  "Carotid body" 755  "Aortic body 
-> and other paraganglia" 758  "Overlapping lesion of endocrine glands and related structures" 759  "Endocrine gland, NO
-> S" 760  "Head, face or neck, NOS" 761  "Thorax, NOS" 762  "Abdomen, NOS" 763  "Pelvis, NOS" 764  "Upper limb, NOS" 76
-> 5  "Lower limb, NOS" 767  "Other ill-defined sites" 768  "Overlapping lesion of ill-defined sites" 770  "Lymph nodes 
-> of head, face and neck" 771  "Intrathoracic lymph nodes" 772  "Intra-abdominal lymph nodes" 773  "Lymph nodes of axil
-> la or arm" 774  "Lymph nodes of inguinal region or leg" 775  "Pelvic lymph nodes" 778  "Lymph nodes of multiple regio
-> ns" 779  "Lymph node, NOS" 809  "Unknown primary site"
+. label define site_icd_o_3 0  "External upper lip" 1  "External lower lip" 2  "External lip,
+>  NOS" 3  "Mucosa of upper lip" 4  "Mucosa of lower lip" 5  "Mucosa of lip, NOS" 6  "Commiss
+> ure of lip" 8  "Overlapping lesion of lip" 9  "Lip, NOS" 19  "Base of tongue, NOS" 20  "Dor
+> sal surface of tongue, NOS" 21  "Border of tongue" 22  "Ventral surface of tongue, NOS" 23 
+>  "Anterior 2/3 of tongue, NOS" 24  "Lingual tonsil" 28  "Overlapping lesion of tongue" 29  
+> "Tongue, NOS" 30  "Upper Gum" 31  "Lower gum" 39  "Gum, NOS" 40  "Anterior floor of mouth" 
+> 41  "Lateral floor of mouth" 48  "Overlapping lesion of floor of mouth" 49  "Floor of mouth
+> , NOS" 50  "Hard palate" 51  "Soft palate, NOS" 52  "Uvula" 58  "Overlapping lesion of pala
+> te" 59  "Palate, NOS" 60  "Cheeck mucosa" 61  "Vestibule of mouth" 62  "Retromolar area" 68
+>   "Overlapping lesion of other and unspecified parts of mouth" 69  "Mouth, NOS" 79  "Paroti
+> d gland" 80  "Submandibular gland" 81  "Sublingual gland" 88  "Overlapping lesion of major 
+> salivary glands" 89  "Major salivary gland, NOS" 90  "Tonsillar fossa" 91  "Tonsillar pilla
+> r" 98  "Overlapping lesion of tonsil" 99  "Tonsil, NOS" 100  "Vallecula" 101  "Anterior sur
+> face of epiglottis" 102  "Lateral wall of oropharynx" 103  "Posterior wall of oropharynx" 1
+> 04  "Branchial cleft" 108  "Overlapping lesions of oropharynx" 109  "Oropharynx, NOS" 110  
+> "Superior wall of nasopharynx" 111  "Posterior wall of nasopharynx" 112  "Lateral wall of n
+> asopharynx" 113  "Anterior wall of nasopharynx" 118  "Overlapping lesion of nasopharynx" 11
+> 9  "Nasopharynx, NOS" 129  "Pyriform sinus" 130  "Postcricoid region" 131  "Hypopharyngeal 
+> aspect of aryepiglottic fold" 132  "Posterior wall of hypopharynx" 138  "Overlapping lesion
+>  of hypopharynx" 139  "Hypopharynx, NOS" 140  "Pharynx, NOS" 142  "Waldeyer ring" 148  "Ove
+> rlapping lesion of lip, oral cavity and pharynx" 150  "Cervical esophagus" 151  "Thoracic e
+> sophagus" 152  "Abdominal esophagus" 153  "Upper third of esophagus" 154  "Middle third of 
+> esophagus" 155  "Lower third of esophagus" 158  "Overlapping lesion of esophagus" 159  "Eso
+> phagus, NOS" 160  "Cardia, NOS" 161  "Fundus of stomach" 162  "Body of stomach" 163  "Gastr
+> ic antrum" 164  "Pylorus" 165  "Lesser curvature of stomach, NOS" 166  "Greater curvature o
+> f stomach, NOS" 168  "Overlapping lesion of stomach" 169  "Stomach, NOS" 170  "Duodenum" 17
+> 1  "Jejunum" 172  "Ileum" 173  "Meckel diverticulum" 178  "Overlapping lesion of small inte
+> stine" 179  "Small intestine, NOS" 180  "Cecum" 181  "Appendix" 182  "Ascending colon" 183 
+>  "Hepatic flexure of colon" 184  "Transverse colon" 185  "Splenic flexure of colon" 186  "D
+> escending colon" 187  "Sigmoid colon" 188  "Overlapping lesion of colon" 189  "Colon, NOS" 
+> 199  "Rectosigmoid junction" 209  "Rectum, NOS" 210  "Anus, NOS" 211  "Anal canal" 212  "Cl
+> oacogenic zone" 218  "Overlapping lesion of rectum, anus and anal canal" 220  "Liver" 221  
+> "intrahepatic bile duct" 239  "Gallbladder" 240  "Extrahepatic bile duct" 241  "Ampulla of 
+> Vater" 248  "Overlapping lesion of billiary tract" 249  "Billiary tract, NOS" 250  "Head of
+>  pancreas" 251  "Body of pancreas" 252  "Tail of pancreas" 253  "Pancreatic duct" 254  "Isl
+> ets of Langerhans" 257  "Other specified parts of pancreas" 258  "Overlapping lesion of pan
+> creas" 259  "Pancreas, NOS" 260  "Intestinal tract, NOS" 268  "Overlapping lesion of digest
+> ive system" 269  "Gastrointestinal tract, NOS" 300  "Nasal cavity" 301  "Middle ear" 310  "
+> Maxillary sinus" 311  "Ethmoid sinus" 312  "Frontal sinus" 313  "Sphenoid sinus" 318  "Over
+> lapping lesion of accessory sinuses" 319  "Accessory sinus, NOS" 320  "Glottis" 321  "Supra
+> glottis" 322  "Subglottis" 323  "Laryngeal cartilage" 328  "Overlapping lesion of larynx" 3
+> 29  "Larynx, NOS" 339  "Trachea" 340  "Main bronchus" 341  "Upper lobe, lung" 342  "Middle 
+> lobe, lung" 343  "Lower lobe, lung" 348  "Overlapping lesion of lung" 349  "Lung, NOS" 379 
+>  "Thymus" 380  "Heart" 381  "Anterior mediastinum" 382  "Posterior mediastinum" 383  "Media
+> stinum, NOS" 384  "Pleura, NOS" 388  "Overlapping lesion of heart, mediastinum and pleura" 
+> 390  "Upper respiratory tract, NOS" 398  "Overlapping lesion of respiratory system and intr
+> athoracic organs" 399  "Ill-defined sites within respiratory system" 400  "Long bones of up
+> per limb, scapula and associated joints" 401  "Short bones of upper limb and associated joi
+> nts" 402  "Long bones of lower limb and associated joints" 403  "Short bones of lower limb 
+> and associated joints" 408  "Overlapping lesion of bones, joints and articular cartilage of
+>  limbs" 409  "Bone of limb, NOS" 410  "Bones of skull and face and associated joints" 411  
+> "Mandible" 412  "Vertebral column" 413  "Rib, sternum, clavicle and associated joints" 414 
+>  "Pelvic bones, sacrum, coccyx and associated joints" 418  "Overlapping lesion of bones, jo
+> ints and articular cartilage" 419  "Bone, NOS" 420  "Blood" 421  "Bone marrow" 422  "Spleen
+> " 423  "Reticuloendothelial system, NOS" 424  "Hematopoietic system, NOS" 440  "Skin of lip
+> , NOS" 441  "Eyelid" 442  "External ear" 443  "Skin of other and unspecified parts of face"
+>  444  "Skin of scalp and neck" 445  "Skin of trunk" 446  "Skin of upper limb and shoulder" 
+> 447  "Skin of lower limb and hip" 448  "Overlapping lesion of skin" 449  "Skin, NOS" 470  "
+> Peripheral nerves and autonomic nervous system of head, face, and neck" 471  "Peripheral ne
+> rves and autonomic nervous system of upper limb and shoulder" 472  "Peripheral nerves and a
+> utonomic nervous system of lower limb and hip" 473  "Peripheral nerves and autonomic nervou
+> s system of thorax" 474  "Peripheral nerves and autonomic nervous system of abdomen" 475  "
+> Peripheral nerves and autonomic nervous system of pelvis" 476  "Peripheral nerves and auton
+> omic nervous system of trunk, NOS" 478  "Overlapping lesion of peripheral nerves and autono
+> mic nervous system" 479  "Autonomic nervous system, NOS" 480  "Retroperitoneum" 481  "Speci
+> fied parts of peritoneum" 482  "Peritoneum, NOS" 488  "Overlapping lesion of retroperitoneu
+> m and peritoneum" 490  "Connective, Subcutaneous and other soft tissues of head, face, and 
+> neck" 491  "Connective, Subcutaneous and other soft tissues of upper limb and shoulder" 492
+>   "Connective, Subcutaneous and other soft tissues of lower limb and hip" 493  "Connective,
+>  Subcutaneous and other soft tissues of thorax" 494  "Connective, Subcutaneous and other so
+> ft tissues of abdomen" 495  "Connective, Subcutaneous and other soft tissues of pelvis" 496
+>   "Connective, Subcutaneous and other soft tissues of trunk, NOS" 498  "Overlapping lesion 
+> of connective, subcutaneous and other soft tissues" 499  "Connective, Subcutaneous and othe
+> r soft tissues, NOS" 500  "Nipple" 501  "Central portion of breast" 502  "Upper-inner quadr
+> ant of breast" 503  "Lower-inner quadrant of breast" 504  "Upper-outer quadrant of breast" 
+> 505  "Lower-outer quadrant of breast" 506  "Axillary tail of breast" 508  "Overlapping lesi
+> on of breast" 509  "Breast, NOS" 510  "Labium majus" 511  "Labium minus" 512  "Clitorus" 51
+> 8  "Overlapping lesion of vulva" 519  "Vulva, NOS" 529  "Vagina, NOS" 530  "Endocervix" 531
+>   "Exocervix" 538  "Overlapping lesion of cervix uteri" 539  "Cervix uteri" 540  "Isthmus u
+> teri" 541  "Endometrium" 542  "Myometrium" 543  "Fundus uteri" 548  "Overlapping lesion of 
+> corpus uteri" 549  "Corpus uteri" 559  "Uterus, NOS" 569  "Ovary" 570  "Fallopian tube" 571
+>   "Broad ligament" 572  "Round ligament" 573  "Parametrium" 574  "Uterine adnexa" 577  "Oth
+> er specified parts of female genital organs" 578  "Overlapping lesion of female genital org
+> ans" 579  "Female genital tract, NOS" 589  "Placenta" 600  "Prepuce" 601  "Glans penis" 602
+>   "Body of penis" 608  "Overlapping lesion of penis" 609  "Penis, NOS" 619  "Prostate gland
+> " 620  "Undescended testis" 621  "Descended testis" 629  "Testis, NOS" 630  "Epididymis" 63
+> 1  "Spermatic cord" 632  "Scrotum, NOS" 637  "Other specified parts of male genital organs"
+>  638  "Overlapping lesion of male genital organs" 639  "Male genital organs, NOS" 649  "Kid
+> ney, NOS" 659  "Renal pelvis" 669  "Ureter" 670  "Trigone of bladder" 671  "Dome of bladder
+> " 672  "Lateral wall of bladder" 673  "Anterior wall of bladder" 674  "Posterior wall of bl
+> adder" 675  "Bladder neck" 676  "Ureteric orifice" 677  "Urachus" 678  "Overlapping lesion 
+> of bladder" 679  "Bladder, NOS" 680  "Urethra" 681  "Paraurethral gland" 688  "Overlapping 
+> lesion of urinary organs" 689  "Urinary system, NOS" 690  "Conjunctiva" 691  "Cornea, NOS" 
+> 692  "Retina" 693  "Choroid" 694  "Ciliary body" 695  "Lacrimal gland" 696  "Orbit, NOS" 69
+> 8  "Overlapping lesion of eye and adnexa" 699  "Eye, NOS" 700  "Cerebral meninges" 701  "Sp
+> inal meninges" 709  "Meninges, NOS" 710  "Cerebrum" 711  "Frontal lobe" 712  "Temporal lobe
+> " 713  "Parietal lobe" 714  "Occipital lobe" 715  "Ventricle, NOS" 716  "Cerebellum, NOS" 7
+> 17  "Brain stem" 718  "Overlapping lesion of brain" 719  "Brain, NOS" 720  "Spinal cord" 72
+> 1  "Cauda equina" 722  "Olfactory nerve" 723  "Optic nerve" 724  "Acoustic nerve" 725  "Cra
+> nial nerve, NOS" 728  "Overlapping lesion of brain and central nervous system" 729  "Nervou
+> s system, NOS" 739  "Thyroid gland" 740  "Cortex of adrenal gland" 741  "Medulla of adrenal
+>  gland" 749  "Adrenal gland, NOS" 750  "Parathyroid gland" 751  "Pituitary gland" 752  "Cra
+> niopharyngeal duct" 753  "Pineal gland" 754  "Carotid body" 755  "Aortic body and other par
+> aganglia" 758  "Overlapping lesion of endocrine glands and related structures" 759  "Endocr
+> ine gland, NOS" 760  "Head, face or neck, NOS" 761  "Thorax, NOS" 762  "Abdomen, NOS" 763  
+> "Pelvis, NOS" 764  "Upper limb, NOS" 765  "Lower limb, NOS" 767  "Other ill-defined sites" 
+> 768  "Overlapping lesion of ill-defined sites" 770  "Lymph nodes of head, face and neck" 77
+> 1  "Intrathoracic lymph nodes" 772  "Intra-abdominal lymph nodes" 773  "Lymph nodes of axil
+> la or arm" 774  "Lymph nodes of inguinal region or leg" 775  "Pelvic lymph nodes" 778  "Lym
+> ph nodes of multiple regions" 779  "Lymph node, NOS" 809  "Unknown primary site"
 
 . label values site site_icd_o_3
 
 . 
+. * use hist and behavior to merge in morphology. Morphology = histology & behavior!
+. merge m:1 hist beh using "data/ICD_O_3_histbeh", keepusing(label)
+file data/ICD_O_3_histbeh.dta not found
+r(601);
+
+end of do-file
+
+r(601);
+
+. ls
+
+total 208
+-rw-r--r--@ 1 echow  staff   3096 Jun 26 13:52 000_get_pedsf.do
+-rw-r--r--@ 1 echow  staff   3639 Jun  4 13:04 00_get_CCflag.do
+-rw-r--r--@ 1 echow  staff   5808 Jun  6 13:14 00_get_medpar.do
+-rw-r--r--@ 1 echow  staff  14886 Jun 15 14:06 00_get_outsaf.do
+-rw-r--r--@ 1 echow  staff  26322 Jul  3 18:18 01_clean_pedsf.do
+-rw-r--r--  1 echow  staff  30793 Jul  4 11:50 01_clean_pedsf.log
+-rw-r--r--@ 1 echow  staff   1632 Jun 27 13:36 10_merge.do
+-rw-r--r--@ 1 echow  staff    874 Jun  8 15:13 get_ICD_9_CM_procedure.do
+-rw-r--r--@ 1 echow  staff    573 Jul  3 14:51 get_ICD_O_3.do
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD00949.000000"
+
+. * use hist and behavior to merge in morphology. Morphology = histology & behavior!
+. merge m:1 hist beh using "../data/ICD_O_3_histbeh", keepusing(label)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                           934
+        from master                        47  (_merge==1)
+        from using                        887  (_merge==2)
+
+    matched                           278,177  (_merge==3)
+    -----------------------------------------
+
+. drop if _merge == 2
+(887 observations deleted)
+
+. drop _merge
+
+. encode label, gen(histbeh)
+
+. drop label
+
+. 
+end of do-file
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD00949.000000"
+
 . * create sequence number of the lung cancer
 . sort patient_id diag_dt seq
 
 . by patient_id: gen seq_lc = _n
 
-. label var seq_lc "the sequence of lung cancer in 2000-2013, ie: 1 is the first LC in 2000-2013, etc"
+. label var seq_lc "the sequence of lung cancer in 2000-2013, ie: 1 is the first LC in 2000-2
+> 013, etc"
 note: label truncated to 80 characters
 
 . tab seq_lc
@@ -911,7 +994,8 @@ lung cancer |
       Total |    278,224      100.00
 
 . 
-. order patient_id s_sex race birth_dt med_death_dt seq* diag_dt agedx* histrec*  e10ex* e10nd*
+. order patient_id s_sex race birth_dt med_death_dt seq* diag_dt agedx* histbeh histrec*  e10
+> ex* e10nd*
 
 . sort patient_id seq
 
@@ -1067,642 +1151,41 @@ reg2cd2015: contains nonnumeric characters; replaced as byte
 . * save an analytical cohort
 . saveold "/Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long", v(12) replace
 (saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long.dta could not be opened
+r(603);
+
+end of do-file
+
+r(603);
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD00949.000000"
+
+. 
+. * ------------------------------------------------------------------------------
+. * save an analytical cohort
+. saveold "/Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long", v(12) replace
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file /Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long.dta not found)
+file /Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long.dta could not be opened
+r(603);
+
+end of do-file
+
+r(603);
+
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD00949.000000"
+
+. 
+. * ------------------------------------------------------------------------------
+. * save an analytical cohort
+. saveold "/Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long", v(12) replace
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
 file /Volumes/QSU/Datasets/SEER_medicare/data/pedsf_analysis_long.dta saved
 
 . 
 end of do-file
 
-. tab histrec
+. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD00949.000000"
 
-        histoly recode--broad groupings |      Freq.     Percent        Cum.
-----------------------------------------+-----------------------------------
-                  unspecified neoplasms |     25,790        9.27        9.27
-              epithelial neoplasms, NOS |     96,581       34.71       43.98
-                 squamous cell neoplams |     57,464       20.65       64.64
-                    basal cell neoplams |          4        0.00       64.64
-transitional cell papillomas and carcin |         47        0.02       64.66
-           adenomas and adenocarcinomas |     91,005       32.71       97.36
-               mucoepidermoid neoplasms |         54        0.02       97.38
-   cystic, mucinous and serous neoplams |      2,922        1.05       98.43
-            ductal and lobular neoplams |         11        0.00       98.44
-                  acinar cell neoplasms |        955        0.34       98.78
-            complex epithelial neoplams |      2,900        1.04       99.82
-             thymic epithelial neoplams |          2        0.00       99.82
-                     nevi and melanomas |         14        0.01       99.83
-   soft tissue tumors and sarcomas, NOS |        161        0.06       99.89
-                  fibromatous neoplasms |         54        0.02       99.91
-                   myxomatous neoplasms |          2        0.00       99.91
-                   lipomatous neoplasms |          1        0.00       99.91
-                    myomatous neoplasms |         47        0.02       99.92
-    complex mixed and stromal neoplasms |        135        0.05       99.97
-                synovial-like neoplasms |         17        0.01       99.98
-                trophoblastic neoplasms |          2        0.00       99.98
-                    blood vessel tumors |         33        0.01       99.99
-    osseous and chondromatous neoplasms |         10        0.00      100.00
-                   miscellaneous tumors |          4        0.00      100.00
-                                gliomas |          3        0.00      100.00
-         neuroepitheliomatous neoplasms |          1        0.00      100.00
-                    nerve sheath tumors |          5        0.00      100.00
-----------------------------------------+-----------------------------------
-                                  Total |    278,224      100.00
-
-. tab hist2_
-
-  histology |
-    (92-00) |
-    ICD-O-2 |      Freq.     Percent        Cum.
-------------+-----------------------------------
-       8000 |     25,864        9.30        9.30
-       8001 |        126        0.05        9.34
-       8002 |         11        0.00        9.35
-       8003 |          7        0.00        9.35
-       8004 |         19        0.01        9.35
-       8010 |     54,383       19.55       28.90
-       8011 |          3        0.00       28.90
-       8012 |      7,716        2.77       31.68
-       8020 |        256        0.09       31.77
-       8021 |         72        0.03       31.79
-       8022 |        163        0.06       31.85
-       8030 |         16        0.01       31.86
-       8031 |        159        0.06       31.91
-       8032 |        264        0.09       32.01
-       8033 |        481        0.17       32.18
-       8034 |          2        0.00       32.18
-       8041 |     30,469       10.95       43.13
-       8042 |      1,638        0.59       43.72
-       8043 |         20        0.01       43.73
-       8044 |        248        0.09       43.82
-       8045 |        657        0.24       44.06
-       8050 |        100        0.04       44.09
-       8051 |          2        0.00       44.09
-       8052 |         47        0.02       44.11
-       8070 |     52,070       18.72       62.82
-       8071 |      3,541        1.27       64.10
-       8072 |      1,353        0.49       64.58
-       8073 |         73        0.03       64.61
-       8074 |        172        0.06       64.67
-       8075 |         10        0.00       64.68
-       8076 |          4        0.00       64.68
-       8080 |          1        0.00       64.68
-       8082 |         17        0.01       64.68
-       8094 |          3        0.00       64.68
-       8095 |          1        0.00       64.68
-       8100 |          1        0.00       64.68
-       8120 |          1        0.00       64.69
-       8123 |         45        0.02       64.70
-       8140 |     76,457       27.48       92.18
-       8141 |          5        0.00       92.18
-       8144 |          5        0.00       92.19
-       8145 |          1        0.00       92.19
-       8146 |          1        0.00       92.19
-       8170 |          1        0.00       92.19
-       8200 |         37        0.01       92.20
-       8201 |          5        0.00       92.20
-       8211 |          1        0.00       92.20
-       8230 |         43        0.02       92.22
-       8231 |          1        0.00       92.22
-       8240 |      2,184        0.78       93.00
-       8241 |          1        0.00       93.00
-       8243 |          2        0.00       93.00
-       8244 |         12        0.00       93.01
-       8245 |          8        0.00       93.01
-       8246 |      3,058        1.10       94.11
-       8247 |          2        0.00       94.11
-       8250 |      7,541        2.71       96.82
-       8251 |         43        0.02       96.84
-       8260 |      1,197        0.43       97.27
-       8263 |          4        0.00       97.27
-       8280 |          1        0.00       97.27
-       8290 |          5        0.00       97.27
-       8310 |        265        0.10       97.37
-       8312 |          1        0.00       97.37
-       8320 |          2        0.00       97.37
-       8323 |        121        0.04       97.41
-       8333 |          5        0.00       97.41
-       8340 |          1        0.00       97.41
-       8350 |          1        0.00       97.41
-       8430 |         54        0.02       97.43
-       8440 |          1        0.00       97.43
-       8441 |          1        0.00       97.43
-       8460 |          1        0.00       97.43
-       8470 |          6        0.00       97.44
-       8471 |          1        0.00       97.44
-       8480 |      1,636        0.59       98.02
-       8481 |      1,020        0.37       98.39
-       8490 |        253        0.09       98.48
-       8500 |         12        0.00       98.49
-       8550 |        952        0.34       98.83
-       8560 |      2,752        0.99       99.82
-       8562 |          2        0.00       99.82
-       8570 |          9        0.00       99.82
-       8571 |          1        0.00       99.82
-       8572 |          3        0.00       99.82
-       8580 |          2        0.00       99.82
-       8720 |         12        0.00       99.83
-       8770 |          1        0.00       99.83
-       8772 |          1        0.00       99.83
-       8800 |         98        0.04       99.86
-       8801 |         43        0.02       99.88
-       8802 |         12        0.00       99.88
-       8803 |          4        0.00       99.88
-       8804 |          5        0.00       99.89
-       8810 |         38        0.01       99.90
-       8811 |          1        0.00       99.90
-       8830 |         15        0.01       99.91
-       8840 |          2        0.00       99.91
-       8852 |          1        0.00       99.91
-       8890 |         35        0.01       99.92
-       8891 |          1        0.00       99.92
-       8894 |          1        0.00       99.92
-       8896 |          1        0.00       99.92
-       8900 |          5        0.00       99.92
-       8901 |          1        0.00       99.92
-       8902 |          1        0.00       99.92
-       8920 |          1        0.00       99.92
-       8930 |          1        0.00       99.92
-       8933 |          1        0.00       99.92
-       8940 |          2        0.00       99.92
-       8963 |          3        0.00       99.93
-       8972 |         14        0.01       99.93
-       8980 |        112        0.04       99.97
-       8982 |          1        0.00       99.97
-       9040 |         11        0.00       99.98
-       9041 |          6        0.00       99.98
-       9070 |          1        0.00       99.98
-       9100 |          2        0.00       99.98
-       9120 |         21        0.01       99.99
-       9130 |          2        0.00       99.99
-       9134 |          9        0.00       99.99
-       9150 |          1        0.00       99.99
-       9180 |          6        0.00       99.99
-       9220 |          1        0.00       99.99
-       9231 |          3        0.00       99.99
-       9250 |          1        0.00       99.99
-       9364 |          4        0.00      100.00
-       9473 |          3        0.00      100.00
-       9522 |          1        0.00      100.00
-       9540 |          5        0.00      100.00
-       9560 |          1        0.00      100.00
-       9801 |          1        0.00      100.00
-------------+-----------------------------------
-      Total |    278,224      100.00
-
-. tab hist
-
- histologic |
-       type |
-    ICD-O-3 |      Freq.     Percent        Cum.
-------------+-----------------------------------
-       8000 |     25,630        9.21        9.21
-       8001 |        125        0.04        9.26
-       8002 |         11        0.00        9.26
-       8003 |          7        0.00        9.26
-       8004 |         17        0.01        9.27
-       8010 |     22,423        8.06       17.33
-       8011 |          3        0.00       17.33
-       8012 |      6,473        2.33       19.66
-       8013 |      1,242        0.45       20.10
-       8014 |          9        0.00       20.11
-       8015 |          3        0.00       20.11
-       8020 |        256        0.09       20.20
-       8021 |         71        0.03       20.22
-       8022 |        163        0.06       20.28
-       8030 |         16        0.01       20.29
-       8031 |        159        0.06       20.35
-       8032 |        263        0.09       20.44
-       8033 |        483        0.17       20.61
-       8034 |          2        0.00       20.62
-       8035 |          2        0.00       20.62
-       8041 |     30,509       10.97       31.58
-       8042 |      1,644        0.59       32.17
-       8043 |         20        0.01       32.18
-       8044 |        249        0.09       32.27
-       8045 |        658        0.24       32.51
-       8046 |     31,933       11.48       43.98
-       8050 |        100        0.04       44.02
-       8051 |          2        0.00       44.02
-       8052 |         47        0.02       44.04
-       8070 |     51,930       18.66       62.70
-       8071 |      3,542        1.27       63.97
-       8072 |      1,354        0.49       64.46
-       8073 |         73        0.03       64.49
-       8074 |        172        0.06       64.55
-       8075 |         10        0.00       64.55
-       8076 |          4        0.00       64.55
-       8078 |          4        0.00       64.56
-       8082 |         17        0.01       64.56
-       8083 |        162        0.06       64.62
-       8084 |         47        0.02       64.64
-       8094 |          3        0.00       64.64
-       8095 |          1        0.00       64.64
-       8120 |          1        0.00       64.64
-       8123 |         46        0.02       64.66
-       8140 |     74,397       26.74       91.40
-       8141 |          5        0.00       91.40
-       8144 |          5        0.00       91.40
-       8145 |          1        0.00       91.40
-       8146 |          1        0.00       91.40
-       8200 |         37        0.01       91.41
-       8201 |          4        0.00       91.41
-       8211 |          1        0.00       91.41
-       8230 |         42        0.02       91.43
-       8231 |          1        0.00       91.43
-       8240 |      2,008        0.72       92.15
-       8241 |          1        0.00       92.15
-       8244 |         12        0.00       92.16
-       8245 |          8        0.00       92.16
-       8246 |      3,061        1.10       93.26
-       8247 |          2        0.00       93.26
-       8249 |        175        0.06       93.32
-       8250 |      6,215        2.23       95.56
-       8251 |         43        0.02       95.57
-       8252 |        602        0.22       95.79
-       8253 |        665        0.24       96.03
-       8254 |         78        0.03       96.06
-       8255 |      2,032        0.73       96.79
-       8260 |      1,202        0.43       97.22
-       8263 |          4        0.00       97.22
-       8290 |          5        0.00       97.22
-       8310 |        265        0.10       97.32
-       8312 |          1        0.00       97.32
-       8320 |          2        0.00       97.32
-       8323 |        122        0.04       97.36
-       8333 |          5        0.00       97.36
-       8340 |          1        0.00       97.36
-       8342 |          1        0.00       97.36
-       8350 |          1        0.00       97.36
-       8430 |         54        0.02       97.38
-       8441 |          1        0.00       97.38
-       8460 |          1        0.00       97.38
-       8470 |          6        0.00       97.39
-       8471 |          1        0.00       97.39
-       8480 |      1,635        0.59       97.97
-       8481 |      1,026        0.37       98.34
-       8490 |        252        0.09       98.43
-       8507 |         11        0.00       98.44
-       8550 |        954        0.34       98.78
-       8551 |          1        0.00       98.78
-       8560 |      2,763        0.99       99.77
-       8562 |          2        0.00       99.78
-       8570 |          9        0.00       99.78
-       8571 |          1        0.00       99.78
-       8572 |          3        0.00       99.78
-       8574 |        107        0.04       99.82
-       8575 |          6        0.00       99.82
-       8576 |          9        0.00       99.82
-       8580 |          1        0.00       99.82
-       8585 |          1        0.00       99.82
-       8720 |         12        0.00       99.83
-       8770 |          1        0.00       99.83
-       8772 |          1        0.00       99.83
-       8800 |         94        0.03       99.86
-       8801 |         43        0.02       99.88
-       8802 |         12        0.00       99.88
-       8803 |          4        0.00       99.88
-       8804 |          5        0.00       99.89
-       8805 |          3        0.00       99.89
-       8810 |          4        0.00       99.89
-       8811 |          1        0.00       99.89
-       8815 |         34        0.01       99.90
-       8830 |         15        0.01       99.91
-       8840 |          2        0.00       99.91
-       8852 |          1        0.00       99.91
-       8890 |         36        0.01       99.92
-       8891 |          1        0.00       99.92
-       8894 |          1        0.00       99.92
-       8896 |          1        0.00       99.92
-       8900 |          5        0.00       99.92
-       8901 |          1        0.00       99.92
-       8902 |          1        0.00       99.92
-       8920 |          1        0.00       99.92
-       8933 |          1        0.00       99.92
-       8935 |          1        0.00       99.93
-       8940 |          2        0.00       99.93
-       8963 |          3        0.00       99.93
-       8972 |         15        0.01       99.93
-       8980 |        112        0.04       99.97
-       8982 |          1        0.00       99.97
-       9040 |         12        0.00       99.98
-       9041 |          5        0.00       99.98
-       9100 |          2        0.00       99.98
-       9120 |         21        0.01       99.99
-       9130 |          2        0.00       99.99
-       9133 |          9        0.00       99.99
-       9150 |          1        0.00       99.99
-       9180 |          6        0.00       99.99
-       9220 |          1        0.00       99.99
-       9231 |          3        0.00      100.00
-       9364 |          4        0.00      100.00
-       9473 |          3        0.00      100.00
-       9522 |          1        0.00      100.00
-       9540 |          5        0.00      100.00
-------------+-----------------------------------
-      Total |    278,224      100.00
-
-. tab hstst
-
-       SEER |
-   historic |
-    stage A |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          0 |        302        0.11        0.11
-          1 |     55,853       20.07       20.18
-          2 |     63,799       22.93       43.11
-          4 |    132,327       47.56       90.68
-          9 |     25,943        9.32      100.00
-------------+-----------------------------------
-      Total |    278,224      100.00
-
-. tab hist
-
- histologic |
-       type |
-    ICD-O-3 |      Freq.     Percent        Cum.
-------------+-----------------------------------
-       8000 |     25,630        9.21        9.21
-       8001 |        125        0.04        9.26
-       8002 |         11        0.00        9.26
-       8003 |          7        0.00        9.26
-       8004 |         17        0.01        9.27
-       8010 |     22,423        8.06       17.33
-       8011 |          3        0.00       17.33
-       8012 |      6,473        2.33       19.66
-       8013 |      1,242        0.45       20.10
-       8014 |          9        0.00       20.11
-       8015 |          3        0.00       20.11
-       8020 |        256        0.09       20.20
-       8021 |         71        0.03       20.22
-       8022 |        163        0.06       20.28
-       8030 |         16        0.01       20.29
-       8031 |        159        0.06       20.35
-       8032 |        263        0.09       20.44
-       8033 |        483        0.17       20.61
-       8034 |          2        0.00       20.62
-       8035 |          2        0.00       20.62
-       8041 |     30,509       10.97       31.58
-       8042 |      1,644        0.59       32.17
-       8043 |         20        0.01       32.18
-       8044 |        249        0.09       32.27
-       8045 |        658        0.24       32.51
-       8046 |     31,933       11.48       43.98
-       8050 |        100        0.04       44.02
-       8051 |          2        0.00       44.02
-       8052 |         47        0.02       44.04
-       8070 |     51,930       18.66       62.70
-       8071 |      3,542        1.27       63.97
-       8072 |      1,354        0.49       64.46
-       8073 |         73        0.03       64.49
-       8074 |        172        0.06       64.55
-       8075 |         10        0.00       64.55
-       8076 |          4        0.00       64.55
-       8078 |          4        0.00       64.56
-       8082 |         17        0.01       64.56
-       8083 |        162        0.06       64.62
-       8084 |         47        0.02       64.64
-       8094 |          3        0.00       64.64
-       8095 |          1        0.00       64.64
-       8120 |          1        0.00       64.64
-       8123 |         46        0.02       64.66
-       8140 |     74,397       26.74       91.40
-       8141 |          5        0.00       91.40
-       8144 |          5        0.00       91.40
-       8145 |          1        0.00       91.40
-       8146 |          1        0.00       91.40
-       8200 |         37        0.01       91.41
-       8201 |          4        0.00       91.41
-       8211 |          1        0.00       91.41
-       8230 |         42        0.02       91.43
-       8231 |          1        0.00       91.43
-       8240 |      2,008        0.72       92.15
-       8241 |          1        0.00       92.15
-       8244 |         12        0.00       92.16
-       8245 |          8        0.00       92.16
-       8246 |      3,061        1.10       93.26
-       8247 |          2        0.00       93.26
-       8249 |        175        0.06       93.32
-       8250 |      6,215        2.23       95.56
-       8251 |         43        0.02       95.57
-       8252 |        602        0.22       95.79
-       8253 |        665        0.24       96.03
-       8254 |         78        0.03       96.06
-       8255 |      2,032        0.73       96.79
-       8260 |      1,202        0.43       97.22
-       8263 |          4        0.00       97.22
-       8290 |          5        0.00       97.22
-       8310 |        265        0.10       97.32
-       8312 |          1        0.00       97.32
-       8320 |          2        0.00       97.32
-       8323 |        122        0.04       97.36
-       8333 |          5        0.00       97.36
-       8340 |          1        0.00       97.36
-       8342 |          1        0.00       97.36
-       8350 |          1        0.00       97.36
-       8430 |         54        0.02       97.38
-       8441 |          1        0.00       97.38
-       8460 |          1        0.00       97.38
-       8470 |          6        0.00       97.39
-       8471 |          1        0.00       97.39
-       8480 |      1,635        0.59       97.97
-       8481 |      1,026        0.37       98.34
-       8490 |        252        0.09       98.43
-       8507 |         11        0.00       98.44
-       8550 |        954        0.34       98.78
-       8551 |          1        0.00       98.78
-       8560 |      2,763        0.99       99.77
-       8562 |          2        0.00       99.78
-       8570 |          9        0.00       99.78
-       8571 |          1        0.00       99.78
-       8572 |          3        0.00       99.78
-       8574 |        107        0.04       99.82
-       8575 |          6        0.00       99.82
-       8576 |          9        0.00       99.82
-       8580 |          1        0.00       99.82
-       8585 |          1        0.00       99.82
-       8720 |         12        0.00       99.83
-       8770 |          1        0.00       99.83
-       8772 |          1        0.00       99.83
-       8800 |         94        0.03       99.86
-       8801 |         43        0.02       99.88
-       8802 |         12        0.00       99.88
-       8803 |          4        0.00       99.88
-       8804 |          5        0.00       99.89
-       8805 |          3        0.00       99.89
-       8810 |          4        0.00       99.89
-       8811 |          1        0.00       99.89
-       8815 |         34        0.01       99.90
-       8830 |         15        0.01       99.91
-       8840 |          2        0.00       99.91
-       8852 |          1        0.00       99.91
-       8890 |         36        0.01       99.92
-       8891 |          1        0.00       99.92
-       8894 |          1        0.00       99.92
-       8896 |          1        0.00       99.92
-       8900 |          5        0.00       99.92
-       8901 |          1        0.00       99.92
-       8902 |          1        0.00       99.92
-       8920 |          1        0.00       99.92
-       8933 |          1        0.00       99.92
-       8935 |          1        0.00       99.93
-       8940 |          2        0.00       99.93
-       8963 |          3        0.00       99.93
-       8972 |         15        0.01       99.93
-       8980 |        112        0.04       99.97
-       8982 |          1        0.00       99.97
-       9040 |         12        0.00       99.98
-       9041 |          5        0.00       99.98
-       9100 |          2        0.00       99.98
-       9120 |         21        0.01       99.99
-       9130 |          2        0.00       99.99
-       9133 |          9        0.00       99.99
-       9150 |          1        0.00       99.99
-       9180 |          6        0.00       99.99
-       9220 |          1        0.00       99.99
-       9231 |          3        0.00      100.00
-       9364 |          4        0.00      100.00
-       9473 |          3        0.00      100.00
-       9522 |          1        0.00      100.00
-       9540 |          5        0.00      100.00
-------------+-----------------------------------
-      Total |    278,224      100.00
-
-. tab histrec
-
-        histoly recode--broad groupings |      Freq.     Percent        Cum.
-----------------------------------------+-----------------------------------
-                  unspecified neoplasms |     25,790        9.27        9.27
-              epithelial neoplasms, NOS |     96,581       34.71       43.98
-                 squamous cell neoplams |     57,464       20.65       64.64
-                    basal cell neoplams |          4        0.00       64.64
-transitional cell papillomas and carcin |         47        0.02       64.66
-           adenomas and adenocarcinomas |     91,005       32.71       97.36
-               mucoepidermoid neoplasms |         54        0.02       97.38
-   cystic, mucinous and serous neoplams |      2,922        1.05       98.43
-            ductal and lobular neoplams |         11        0.00       98.44
-                  acinar cell neoplasms |        955        0.34       98.78
-            complex epithelial neoplams |      2,900        1.04       99.82
-             thymic epithelial neoplams |          2        0.00       99.82
-                     nevi and melanomas |         14        0.01       99.83
-   soft tissue tumors and sarcomas, NOS |        161        0.06       99.89
-                  fibromatous neoplasms |         54        0.02       99.91
-                   myxomatous neoplasms |          2        0.00       99.91
-                   lipomatous neoplasms |          1        0.00       99.91
-                    myomatous neoplasms |         47        0.02       99.92
-    complex mixed and stromal neoplasms |        135        0.05       99.97
-                synovial-like neoplasms |         17        0.01       99.98
-                trophoblastic neoplasms |          2        0.00       99.98
-                    blood vessel tumors |         33        0.01       99.99
-    osseous and chondromatous neoplasms |         10        0.00      100.00
-                   miscellaneous tumors |          4        0.00      100.00
-                                gliomas |          3        0.00      100.00
-         neuroepitheliomatous neoplasms |          1        0.00      100.00
-                    nerve sheath tumors |          5        0.00      100.00
-----------------------------------------+-----------------------------------
-                                  Total |    278,224      100.00
-
-. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD02088.000000"
-
-. label define histology 0 "unspecified neoplasms" 1 "epithelial neoplasms, NOS" 2 "squamous cell neoplams" 3 "basal cell neoplams" 4 "t
-> ransitional cell papillomas and carcinomas" 5 "adenomas and adenocarcinomas" 6 "adnexal and skin appendage neoplams" 7 "mucoepidermoid
->  neoplasms" 8 "cystic, mucinous and serous neoplams" 9 "ductal and lobular neoplams" 10 "acinar cell neoplasms" 11 "complex epithelial
->  neoplams" 12 "thymic epithelial neoplams" 13 "specialized gonadal neoplams" 14 "paragangliomas and glumus tumors" 15 "nevi and melano
-> mas" 16 "soft tissue tumors and sarcomas, NOS" 17 "fibromatous neoplasms" 18 "myxomatous neoplasms" 19 "lipomatous neoplasms" 20 "myom
-> atous neoplasms" 21 "complex mixed and stromal neoplasms" 22 "fibroepithelial neoplasms" 23 "synovial-like neoplasms" 24 "mesothelial 
-> neoplasms" 25 "germ cell neoplasms" 26 "trophoblastic neoplasms" 27 "mesonephromas" 28 "blood vessel tumors" 29 "lymphatic vessel tumo
-> rs" 30 "osseous and chondromatous neoplasms" 31 "giant cell tumors" 32 "miscellaneous bone tumors (C40._,C41._)" 33 "odontogenic tumor
-> s ( C41._)" 34 "miscellaneous tumors" 35 "gliomas" 36 "neuroepitheliomatous neoplasms" 37 "meningiomas" 38 "nerve sheath tumors" 39 "g
-> ranular cell tumors & alveolar soft part sarcomas" 40 "malignant lymphomas, NOS or diffuse" 41 "hodgkin lymphomas" 42 "nhl - mature b-
-> cell lymphomas" 43 "nhl - mature t and nk-cell lymphomas" 44 "nhl - precursor cell lymphoblastic lymphoma" 45 "plasma cell tumors" 46 
-> "mast cell tumors" 47 "neoplasms of histiocytes and accessory lymphoid cells" 48 "immunoproliferative diseases" 49 "leukemias, nos" 50
->  "lymphoid leukemias (C42.1)" 51 "myeloid leukemias (C42.1)" 52 "other leukemias (C42.1)" 53 "chronic myeloproliferative disorders (C4
-> 2.1)" 54 "other hematologic disorders" 55 "myelodysplastic syndrome" 98 "other" 
-label histology already defined
-r(110);
-
-end of do-file
-
-r(110);
-
-. label list histology
-histology:
-           0 unspecified neoplasms
-           1 epithelial neoplasms, NOS
-           2 squamous cell neoplams
-           3 basal cell neoplams
-           4 transitional cell papillomas and carcinomas
-           5 adenomas and adenocarcinomas
-           6 adnexal and skin appendage neoplams
-           7 mucoepidermoid neoplasms
-           8 cystic, mucinous and serous neoplams
-           9 ductal and lobular neoplams
-          10 acinar cell neoplasms
-          11 complex epithelial neoplams
-          12 thymic epithelial neoplams
-          13 specialized gonadal neoplams
-          14 paragangliomas and glumus tumors
-          15 nevi and melanomas
-          16 soft tissue tumors and sarcomas, NOS
-          17 fibromatous neoplasms
-          18 myxomatous neoplasms
-          19 lipomatous neoplasms
-          20 myomatous neoplasms
-          21 complex mixed and stromal neoplasms
-          22 fibroepithelial neoplasms
-          23 synovial-like neoplasms
-          24 mesothelial neoplasms
-          25 germ cell neoplasms
-          26 trophoblastic neoplasms
-          27 mesonephromas
-          28 blood vessel tumors
-          29 lymphatic vessel tumors
-          30 osseous and chondromatous neoplasms
-          31 giant cell tumors
-          32 miscellaneous bone tumors (C40._,C41._)
-          33 odontogenic tumors ( C41._)
-          34 miscellaneous tumors
-          35 gliomas
-          36 neuroepitheliomatous neoplasms
-          37 meningiomas
-          38 nerve sheath tumors
-          39 granular cell tumors & alveolar soft part sarcomas
-          40 malignant lymphomas, NOS or diffuse
-          41 hodgkin lymphomas
-          42 nhl - mature b-cell lymphomas
-          43 nhl - mature t and nk-cell lymphomas
-          44 nhl - precursor cell lymphoblastic lymphoma
-          45 plasma cell tumors
-          46 mast cell tumors
-          47 neoplasms of histiocytes and accessory lymphoid cells
-          48 immunoproliferative diseases
-          49 leukemias, nos
-          50 lymphoid leukemias (C42.1)
-          51 myeloid leukemias (C42.1)
-          52 other leukemias (C42.1)
-          53 chronic myeloproliferative disorders (C42.1)
-          54 other hematologic disorders
-          55 myelodysplastic syndrome
-          98 other
-
-. label drop histology
-
-. do "/var/folders/x2/gkyq3hbx5219h68lwx_tsv540000gn/T//SD02088.000000"
-
-. label define histology 0 "unspecified neoplasms" 1 "epithelial neoplasms, NOS" 2 "squamous cell neoplams" 3 "basal cell neoplams" 4 "t
-> ransitional cell papillomas and carcinomas" 5 "adenomas and adenocarcinomas" 6 "adnexal and skin appendage neoplams" 7 "mucoepidermoid
->  neoplasms" 8 "cystic, mucinous and serous neoplams" 9 "ductal and lobular neoplams" 10 "acinar cell neoplasms" 11 "complex epithelial
->  neoplams" 12 "thymic epithelial neoplams" 13 "specialized gonadal neoplams" 14 "paragangliomas and glumus tumors" 15 "nevi and melano
-> mas" 16 "soft tissue tumors and sarcomas, NOS" 17 "fibromatous neoplasms" 18 "myxomatous neoplasms" 19 "lipomatous neoplasms" 20 "myom
-> atous neoplasms" 21 "complex mixed and stromal neoplasms" 22 "fibroepithelial neoplasms" 23 "synovial-like neoplasms" 24 "mesothelial 
-> neoplasms" 25 "germ cell neoplasms" 26 "trophoblastic neoplasms" 27 "mesonephromas" 28 "blood vessel tumors" 29 "lymphatic vessel tumo
-> rs" 30 "osseous and chondromatous neoplasms" 31 "giant cell tumors" 32 "miscellaneous bone tumors (C40._,C41._)" 33 "odontogenic tumor
-> s ( C41._)" 34 "miscellaneous tumors" 35 "gliomas" 36 "neuroepitheliomatous neoplasms" 37 "meningiomas" 38 "nerve sheath tumors" 39 "g
-> ranular cell tumors & alveolar soft part sarcomas" 40 "malignant lymphomas, NOS or diffuse" 41 "hodgkin lymphomas" 42 "nhl - mature b-
-> cell lymphomas" 43 "nhl - mature t and nk-cell lymphomas" 44 "nhl - precursor cell lymphoblastic lymphoma" 45 "plasma cell tumors" 46 
-> "mast cell tumors" 47 "neoplasms of histiocytes and accessory lymphoid cells" 48 "immunoproliferative diseases" 49 "leukemias, nos" 50
->  "lymphoid leukemias (C42.1)" 51 "myeloid leukemias (C42.1)" 52 "other leukemias (C42.1)" 53 "chronic myeloproliferative disorders (C4
-> 2.1)" 54 "other hematologic disorders" 55 "myelodysplastic syndrome" 98 "other" 
-
-. label values histrec histology
-
-. 
-end of do-file
-
+. capture log close
