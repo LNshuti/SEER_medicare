@@ -29,16 +29,18 @@ capture program drop clean_outsaf
 program define clean_outsaf
 	args file
 	
-	use "/Volumes/QSU/Datasets/SEER_medicare/outsaf/`file'"
+	use "/Users/echow/DATA_SEER_medicare/`file'"
 
 	keep  patient_id claim_id state_cd ms_cd from_dtm from_dtd from_dty ///
 	pmt_amt tot_chrg charge tot_line seg_line tot_seg seg_num rec_count year ///
-	prcdr_cd* prcdrdtm* prcdrdtd* prcdrdty* 
+	hcpcs prcdr_cd* prcdrdtm* prcdrdtd* prcdrdty* 
 // 	dgn_cd*  
 	 	 
 	quietly destring  claim_id state_cd ms_cd from_dtm from_dtd from_dty ///
 	pmt_amt tot_chrg charge tot_line seg_line tot_seg seg_num rec_count year ///
 	prcdr_cd* prcdrdtm* prcdrdtd* prcdrdty*, replace force
+	
+	drop if missing(charge)
 	
 	// ALSO: encode the procedure codes?? 	
 	label define prcdr 8701	"Pneumoencephalogram"
@@ -241,7 +243,7 @@ program define clean_outsaf
 	}
 	
 	compress 
-	saveold "/Volumes/QSU/Datasets/SEER_medicare/outsaf/small_`file'", v(12) replace
+	saveold "/Users/echow/DATA_SEER_medicare/small_`file'", v(12) replace
 end
 
 
@@ -249,8 +251,13 @@ end
 * -------------------------------------------------------
 * clean and compress 700 files
 
+* test one file
+if (1==0) {
+	clean_outsaf "outsaf00.file001.txt.dta"
+}
+
 * look for outpat files
-local outpat_files: dir "/Volumes/QSU/Datasets/SEER_medicare/outsaf" files "outsaf*"	 // upper case
+local outpat_files: dir "/Users/echow/DATA_SEER_medicare" files "outsaf*"	 // upper case
 
 * compress and save out 700 dta files
 foreach file of local outpat_files {
@@ -259,15 +266,18 @@ foreach file of local outpat_files {
 
 
 
+
+
 * -------------------------------------------------------
 * append the 700 files
 
-use "/Volumes/QSU/Datasets/SEER_medicare/outsaf/small_outsaf00.file001.txt.dta", clear
+use "/Users/echow/DATA_SEER_medicare/small_outsaf00.file001.txt.dta", clear
 gen file = 1
-local i = 1
 
+
+local i = 1
 * look for outpat files (SMALL)
-local outpat_sm_files: dir "/Volumes/QSU/Datasets/SEER_medicare/outsaf" files "small_outsaf*"	 // upper case
+local outpat_sm_files: dir "/Users/echow/DATA_SEER_medicare" files "small_outsaf*"	 // upper case
 
 * compress and save out 700 dta files
 foreach file of local outpat_sm_files {
@@ -276,7 +286,7 @@ foreach file of local outpat_sm_files {
 	}
 	if (`i' > 1)  {
 // 		di "`file'"
-		append using "/Volumes/QSU/Datasets/SEER_medicare/outsaf/`file'"
+		append using "/Users/echow/DATA_SEER_medicare/`file'"
 		replace file = `i' if missing(file)
 	}
 	local i = `i' + 1  // increment i
@@ -284,7 +294,7 @@ foreach file of local outpat_sm_files {
 
 compress
 * save as one file
-saveold "/Volumes/QSU/Datasets/SEER_medicare/outsaf/small_outsaf_APPENDED", v(12) replace
+saveold "/Users/echow/DATA_SEER_medicare/small_outsaf_APPENDED", v(12) replace
 
 
 log close
